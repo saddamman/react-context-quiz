@@ -1,5 +1,5 @@
 export const QuizQuestion = ({ suffleAnswer, handleClick }) => {
-  console.log('quiz question');
+  console.log("QuizQuestion");
 
   return (
     <ul className=" space-y-2">

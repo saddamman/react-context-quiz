@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import QUESTION from '../data/question';
-import { QuizQuestion } from './QuizQuestion';
-import QuizTimer from './QuizTimer';
-import { Summary } from './Summary';
+import { useState } from "react";
+import QUESTION from "../data/question";
+import { QuizQuestion } from "./QuizQuestion";
+import QuizTimer from "./QuizTimer";
+import { Summary } from "./Summary";
+import { Button } from "./comman/Button";
 
 function Quiz() {
-  console.log('quiz component');
+  console.log("Quiz Component");
   const [userAnswer, setUserAnswer] = useState([]);
+  const [isStartQuiz, setIsStartQuiz] = useState(false);
 
   const currentAnswer = userAnswer?.length;
 
@@ -26,13 +28,15 @@ function Quiz() {
   let suffleAnswer = [correctAnswer, ...incorrectAnswers];
   suffleAnswer.sort(() => Math.random() - 0.5);
 
-  console.log(currentAnswer, correctAnswer);
-
   const handleClick = (e) => {
     setUserAnswer((prevQuizAnswer) => [
       ...prevQuizAnswer,
       e !== undefined ? e.target.innerText : null,
     ]);
+  };
+
+  const handleStartQuiz = () => {
+    setIsStartQuiz(true);
   };
 
   return (
@@ -44,21 +48,30 @@ function Quiz() {
         <p>A simple quiz application written in React.js</p>
       </div>
       <div className="quiz-section mt-10 bg-pink-700 border border-pink rounded-3xl p-6 text-white w-1/2 m-auto">
-        <div className="mb-4">
-          <QuizTimer
-            key={currentAnswer}
-            duration={defaultTimerDuration}
-            onHandleClick={handleClick}
-          />
-        </div>
-        <p className="font-semibold mb-5">{QUESTION[currentAnswer].text}</p>
+        {!isStartQuiz ? (
+          <Button className="mx-auto block" onClick={handleStartQuiz}>
+            Start Quiz
+          </Button>
+        ) : (
+          <>
+            <div className="mb-4">
+              <QuizTimer
+                key={currentAnswer}
+                duration={defaultTimerDuration}
+                onHandleClick={handleClick}
+                isStartQuiz={isStartQuiz}
+              />
+            </div>
+            <p className="font-semibold mb-5">{QUESTION[currentAnswer].text}</p>
 
-        <QuizQuestion
-          suffleAnswer={suffleAnswer}
-          currentAnswer={currentAnswer}
-          handleClick={handleClick}
-          key={currentAnswer}
-        />
+            <QuizQuestion
+              suffleAnswer={suffleAnswer}
+              currentAnswer={currentAnswer}
+              handleClick={handleClick}
+              key={currentAnswer}
+            />
+          </>
+        )}
       </div>
     </section>
   );

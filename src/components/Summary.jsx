@@ -29,7 +29,7 @@ export const Summary = ({ userAnswer }) => {
   console.log(noCorrectAnswer);
 
   return (
-    <div className="text-center mx-auto bg-grey-300 shadow-lg rounded p-10">
+    <div className="text-center mx-auto bg-white-100 shadow-lg rounded p-10">
       <Image
         src={quizCompletedImg}
         alt="quiz completed"
